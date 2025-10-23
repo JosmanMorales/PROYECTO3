@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <center><title>Simulador de Planificación de CPU</title></center>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar card">
+      <div class="topbar__left">
+        
+        <h1>Simulador de Planificación de CPU</h1>
+      </div>
+      <div class="topbar__right">
+        <button id="themeToggle" class="btn btn-ghost" title="Cambiar tema"></button>
+        
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Panel de control -->
+      <section class="card">
+        <h2 class="section-title">Panel de control</h2>
+        <div id="controls" class="controls">
+          <div class="field">
+            <label>Algoritmo</label>
+            <select id="algorithm" class="input">
+              <option value="FCFS">FCFS</option>
+              <option value="SJF">SJF (no expropiativo)</option>
+              <option value="RR">Round Robin</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Quantum (RR)</label>
+            <input class="input" type="number" id="quantum" value="2" min="1" />
+          </div>
+
+          <div class="field">
+            <label>Tiempo por unidad (s)</label>
+            <input class="input" type="number" id="tick" value="3" min="1" max="6" />
+          </div>
+
+          <div class="actions">
+            <button id="start" class="btn btn-primary">▶ Iniciar</button>
+            <button id="pause" class="btn btn-secondary">⏸ Pausar</button>
+            <button id="reset" class="btn btn-outline">↻ Reiniciar</button>
+          </div>
+        </div>
+        <p class="muted">Cada unidad de tiempo equivale a <span id="tickDisplay">3</span> s.</p>
+      </section>
+
+      <!-- Crear procesos -->
+      <section class="card">
+        <h2 class="section-title">Crear proceso</h2>
+        <div id="create-process" class="creator">
+          <input id="name" class="input" placeholder="Nombre (P1)" />
+          <input id="arrival" class="input" type="number" placeholder="Llegada" min="0" />
+          <input id="burst" class="input" type="number" placeholder="CPU" min="1" />
+          <button id="addProcess" class="btn btn-primary">➕ Agregar</button>
+        </div>
+
+        <div id="processList" class="process-list">
+          <!-- filas renderizadas por app.js -->
+        </div>
+      </section>
+
+      <!-- Gantt -->
+      <section class="card card--wide">
+        <h2 class="section-title">Línea de tiempo (Gantt)</h2>
+        <div id="gantt-container">
+          <div id="gantt" class="gantt"></div>
+        </div>
+      </section>
+
+      <!-- Cola RR -->
+      <section class="card">
+        <h2 class="section-title">Cola (Round Robin)</h2>
+        <div id="queue" class="queue">Solo visible en Round Robin</div>
+      </section>
+
+      <!-- Resultados -->
+      <section class="card card--wide">
+        <h2 class="section-title">Tabla de eficiencia</h2>
+        <div class="table-wrap">
+          <table id="resultsTable" class="table">
+            <thead>
+              <tr>
+                <th>Proceso</th><th>Llegada</th><th>CPU</th>
+                <th>Inicio</th><th>Fin</th>
+                <th>Retorno</th><th>Espera</th><th>Respuesta</th><th>Eficiencia</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    
+  </div>
+
+  <!-- Mantén el orden: primero el core, luego la UI -->
+  <script src="scheduler.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
